@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { Check, Star, Calculator } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/components/ui/use-toast';
 
 const Pricing = () => {
-  const { toast } = useToast();
+  const navigate = useNavigate();
   const [calculatorValues, setCalculatorValues] = useState({
     items: 100,
     orders: 50,
@@ -14,10 +14,7 @@ const Pricing = () => {
   });
 
   const handleCTAClick = () => {
-    toast({
-      title: "🚧 This feature isn't implemented yet—but don't worry! You can request it in your next prompt! 🚀",
-      duration: 5000,
-    });
+    navigate('/contact');
   };
 
   const pricingPlans = [
@@ -141,7 +138,7 @@ const Pricing = () => {
       </section>
 
       {/* Pricing Plans */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -152,7 +149,7 @@ const Pricing = () => {
             <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">
               Choose Your Plan
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               Flexible pricing options that scale with your business
             </p>
           </motion.div>
@@ -164,13 +161,13 @@ const Pricing = () => {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className={`relative bg-white rounded-xl shadow-custom p-8 ${
-                  plan.popular ? 'ring-2 ring-blue-600 transform scale-105' : ''
+                className={`relative glass-effect rounded-xl shadow-lg p-8 ${
+                  plan.popular ? 'ring-2 ring-[var(--primary-light-blue)] transform scale-105' : ''
                 }`}
               >
                 {plan.popular && (
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <div className="bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-medium flex items-center">
+                    <div className="bg-[var(--primary-light-blue)] text-white px-4 py-2 rounded-full text-sm font-medium flex items-center">
                       <Star className="h-4 w-4 mr-1" />
                       Most Popular
                     </div>
@@ -178,16 +175,16 @@ const Pricing = () => {
                 )}
                 
                 <div className="text-center mb-8">
-                  <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
-                  <p className="text-gray-600 mb-4">{plan.description}</p>
+                  <h3 className="text-2xl font-bold mb-2 text-white">{plan.name}</h3>
+                  <p className="text-gray-300 mb-4">{plan.description}</p>
                   <div className="text-3xl font-bold gradient-text">{plan.price}</div>
                 </div>
 
                 <div className="space-y-4 mb-8">
                   {plan.features.map((feature, featureIndex) => (
                     <div key={featureIndex} className="flex items-center space-x-3">
-                      <Check className="h-5 w-5 text-green-500 flex-shrink-0" />
-                      <span className="text-gray-700">{feature}</span>
+                      <Check className="h-5 w-5 text-[var(--primary-light-blue)] flex-shrink-0" />
+                      <span className="text-gray-300">{feature}</span>
                     </div>
                   ))}
                 </div>
@@ -197,7 +194,7 @@ const Pricing = () => {
                   className={`w-full py-3 rounded-full font-semibold ${
                     plan.popular 
                       ? 'btn-primary text-white' 
-                      : 'border border-gray-300 text-gray-700 hover:bg-gray-50'
+                      : 'border border-gray-300 text-gray-300 hover:bg-white/10'
                   }`}
                   variant={plan.popular ? 'default' : 'outline'}
                 >
@@ -210,7 +207,7 @@ const Pricing = () => {
       </section>
 
       {/* Detailed Pricing */}
-      <section className="py-16 bg-white">
+      <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -221,7 +218,7 @@ const Pricing = () => {
             <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">
               Detailed Service Rates
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               Transparent pricing for all our services with no hidden fees
             </p>
           </motion.div>
@@ -233,16 +230,16 @@ const Pricing = () => {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-gray-50 rounded-xl p-6"
+                className="glass-effect rounded-xl p-6"
               >
                 <h3 className="text-xl font-bold mb-6 text-center gradient-text">
                   {category.category}
                 </h3>
                 <div className="space-y-3">
                   {category.services.map((service, serviceIndex) => (
-                    <div key={serviceIndex} className="flex justify-between items-center py-2 border-b border-gray-200 last:border-b-0">
-                      <span className="text-gray-700">{service.name}</span>
-                      <span className="font-semibold text-blue-600">{service.price}</span>
+                    <div key={serviceIndex} className="flex justify-between items-center py-2 border-b border-white/20 last:border-b-0">
+                      <span className="text-gray-300">{service.name}</span>
+                      <span className="font-semibold text-[var(--primary-light-blue)]">{service.price}</span>
                     </div>
                   ))}
                 </div>
@@ -253,7 +250,7 @@ const Pricing = () => {
       </section>
 
       {/* Cost Calculator */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -261,58 +258,58 @@ const Pricing = () => {
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <Calculator className="h-12 w-12 text-blue-600 mx-auto mb-4" />
+            <Calculator className="h-12 w-12 text-[var(--primary-light-blue)] mx-auto mb-4" />
             <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">
               Cost Calculator
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-gray-300">
               Estimate your monthly costs based on your volume
             </p>
           </motion.div>
 
-          <div className="bg-white rounded-xl shadow-custom p-8">
+          <div className="glass-effect rounded-xl shadow-lg p-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-300 mb-2">
                   Items to prep per month
                 </label>
                 <input
                   type="number"
                   value={calculatorValues.items}
                   onChange={(e) => setCalculatorValues({...calculatorValues, items: parseInt(e.target.value) || 0})}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-white/20 rounded-lg bg-transparent focus:ring-2 focus:ring-[var(--primary-light-blue)] focus:border-transparent"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-300 mb-2">
                   Orders to fulfill per month
                 </label>
                 <input
                   type="number"
                   value={calculatorValues.orders}
                   onChange={(e) => setCalculatorValues({...calculatorValues, orders: parseInt(e.target.value) || 0})}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-white/20 rounded-lg bg-transparent focus:ring-2 focus:ring-[var(--primary-light-blue)] focus:border-transparent"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-300 mb-2">
                   Items in storage
                 </label>
                 <input
                   type="number"
                   value={calculatorValues.storage}
                   onChange={(e) => setCalculatorValues({...calculatorValues, storage: parseInt(e.target.value) || 0})}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-white/20 rounded-lg bg-transparent focus:ring-2 focus:ring-[var(--primary-light-blue)] focus:border-transparent"
                 />
               </div>
             </div>
 
-            <div className="text-center p-6 bg-gradient-to-r from-blue-50 to-green-50 rounded-lg">
-              <div className="text-sm text-gray-600 mb-2">Estimated Monthly Cost</div>
+            <div className="text-center p-6 bg-gradient-to-r from-white/10 to-white/5 rounded-lg">
+              <div className="text-sm text-gray-300 mb-2">Estimated Monthly Cost</div>
               <div className="text-4xl font-bold gradient-text">
                 ${calculateEstimate().toFixed(2)}
               </div>
-              <div className="text-sm text-gray-500 mt-2">
+              <div className="text-sm text-gray-400 mt-2">
                 Based on standard rates • Volume discounts available
               </div>
             </div>
@@ -330,7 +327,7 @@ const Pricing = () => {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -341,7 +338,7 @@ const Pricing = () => {
             <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">
               Pricing FAQ
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-gray-300">
               Common questions about our pricing structure
             </p>
           </motion.div>
@@ -370,10 +367,10 @@ const Pricing = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-gray-50 rounded-lg p-6"
+                className="glass-effect rounded-lg p-6"
               >
-                <h3 className="text-lg font-semibold mb-3">{faq.question}</h3>
-                <p className="text-gray-600">{faq.answer}</p>
+                <h3 className="text-lg font-semibold mb-3 text-white">{faq.question}</h3>
+                <p className="text-gray-300">{faq.answer}</p>
               </motion.div>
             ))}
           </div>
@@ -398,14 +395,14 @@ const Pricing = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
                 onClick={handleCTAClick}
-                className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-full"
+                className="bg-white text-[var(--primary-dark-blue)] hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-full"
               >
                 Get Custom Quote
               </Button>
               <Button 
                 onClick={handleCTAClick}
                 variant="outline" 
-                className="border-white text-white hover:bg-white hover:text-blue-600 px-8 py-4 text-lg font-semibold rounded-full"
+                className="border-white text-white hover:bg-white hover:text-[var(--primary-dark-blue)] px-8 py-4 text-lg font-semibold rounded-full"
               >
                 Schedule Call
               </Button>

@@ -1,18 +1,15 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { Package, Truck, Warehouse, RotateCcw, Tags, ShoppingCart, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/components/ui/use-toast';
 
 const Services = () => {
-  const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleCTAClick = () => {
-    toast({
-      title: "🚧 This feature isn't implemented yet—but don't worry! You can request it in your next prompt! 🚀",
-      duration: 5000,
-    });
+    navigate('/contact');
   };
 
   const mainServices = [
@@ -28,7 +25,8 @@ const Services = () => {
         'Compliance verification',
         'Expiration date management'
       ],
-      image: 'FBA prep station with workers labeling and packaging products for Amazon fulfillment'
+      image: 'FBA prep station with workers labeling and packaging products for Amazon fulfillment',
+      imageSrc: '/prep services.jpeg'
     },
     {
       icon: Truck,
@@ -42,7 +40,8 @@ const Services = () => {
         'Real-time tracking updates',
         'International shipping'
       ],
-      image: 'Order fulfillment center with workers picking and packing orders for shipment'
+      image: 'Order fulfillment center with workers picking and packing orders for shipment',
+      imageSrc: '/fullfilment.jpeg'
     },
     {
       icon: Warehouse,
@@ -56,7 +55,8 @@ const Services = () => {
         'FIFO inventory rotation',
         'Damage protection insurance'
       ],
-      image: 'Modern warehouse with organized inventory storage and climate control systems'
+      image: 'Modern warehouse with organized inventory storage and climate control systems',
+      imageSrc: '/inventory.jpeg'
     },
     {
       icon: RotateCcw,
@@ -70,7 +70,8 @@ const Services = () => {
         'Return analytics reporting',
         'Customer communication'
       ],
-      image: 'Returns processing area with workers inspecting and repackaging returned items'
+      image: 'Returns processing area with workers inspecting and repackaging returned items',
+      imageSrc: '/return processing.jpeg'
     },
     {
       icon: Tags,
@@ -84,7 +85,8 @@ const Services = () => {
         'Custom insert creation',
         'Bundle optimization'
       ],
-      image: 'Kitting station with workers assembling product bundles and promotional packages'
+      image: 'Kitting station with workers assembling product bundles and promotional packages',
+      imageSrc: '/bundling.jpeg'
     },
     {
       icon: ShoppingCart,
@@ -98,7 +100,8 @@ const Services = () => {
         'Etsy order processing',
         'Custom API connections'
       ],
-      image: 'Computer screens showing multiple e-commerce platform integrations and order management'
+      image: 'Computer screens showing multiple e-commerce platform integrations and order management',
+      imageSrc: '/integration.jpeg'
     }
   ];
 
@@ -140,7 +143,7 @@ const Services = () => {
       </section>
 
       {/* Main Services */}
-      <section className="py-16 bg-white">
+      <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-20">
             {mainServices.map((service, index) => (
@@ -155,15 +158,15 @@ const Services = () => {
               >
                 <div className={index % 2 === 1 ? 'lg:col-start-2' : ''}>
                   <div className="flex items-center mb-6">
-                    <service.icon className="h-12 w-12 text-blue-600 mr-4" />
+                    <service.icon className="h-12 w-12 text-accent-green mr-4" />
                     <h2 className="text-3xl font-bold gradient-text">{service.title}</h2>
                   </div>
-                  <p className="text-xl text-gray-600 mb-6">{service.description}</p>
+                  <p className="text-xl text-gray-300 mb-6">{service.description}</p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-8">
                     {service.features.map((feature, featureIndex) => (
                       <div key={featureIndex} className="flex items-center space-x-3">
-                        <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0" />
-                        <span className="text-gray-700">{feature}</span>
+                        <CheckCircle className="h-5 w-5 text-accent-green flex-shrink-0" />
+                        <span className="text-gray-300">{feature}</span>
                       </div>
                     ))}
                   </div>
@@ -178,7 +181,7 @@ const Services = () => {
                   <img 
                     className="rounded-xl shadow-custom w-full h-80 object-cover"
                     alt={`${service.title} - ${service.description}`}
-                   src="https://images.unsplash.com/photo-1595872018818-97555653a011" />
+                   src={service.imageSrc || "https://images.unsplash.com/photo-1595872018818-97555653a011"} />
                 </div>
               </motion.div>
             ))}
@@ -187,7 +190,7 @@ const Services = () => {
       </section>
 
       {/* Additional Services */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -198,7 +201,7 @@ const Services = () => {
             <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">
               Additional Services
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               Comprehensive support services to optimize your e-commerce operations
             </p>
           </motion.div>
@@ -210,11 +213,11 @@ const Services = () => {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white p-6 rounded-xl shadow-custom hover:shadow-xl transition-shadow duration-300"
+                className="glass-effect p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300"
               >
                 <div className="flex items-center space-x-3">
-                  <CheckCircle className="h-6 w-6 text-green-500 flex-shrink-0" />
-                  <span className="font-medium text-gray-800">{service}</span>
+                  <CheckCircle className="h-6 w-6 text-accent-green flex-shrink-0" />
+                  <span className="font-medium text-white">{service}</span>
                 </div>
               </motion.div>
             ))}
@@ -223,7 +226,7 @@ const Services = () => {
       </section>
 
       {/* Process Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -234,7 +237,7 @@ const Services = () => {
             <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">
               Our Simple Process
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               Getting started with Pro Logistics Prep is easy and straightforward
             </p>
           </motion.div>
@@ -269,11 +272,11 @@ const Services = () => {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="text-center"
               >
-                <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-green-600 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">
+                <div className="w-16 h-16 bg-accent-orange text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">
                   {step.step}
                 </div>
-                <h3 className="text-xl font-semibold mb-3">{step.title}</h3>
-                <p className="text-gray-600">{step.description}</p>
+                <h3 className="text-xl font-semibold mb-3 text-white">{step.title}</h3>
+                <p className="text-gray-300">{step.description}</p>
               </motion.div>
             ))}
           </div>
@@ -299,16 +302,9 @@ const Services = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
                 onClick={handleCTAClick}
-                className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-full"
+                className="btn-orange px-8 py-4 text-lg font-semibold rounded-full"
               >
                 Get Free Quote
-              </Button>
-              <Button 
-                onClick={handleCTAClick}
-                variant="outline" 
-                className="border-white text-white hover:bg-white hover:text-blue-600 px-8 py-4 text-lg font-semibold rounded-full"
-              >
-                Schedule Consultation
               </Button>
             </div>
           </motion.div>

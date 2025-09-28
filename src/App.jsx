@@ -10,11 +10,13 @@ import Pricing from '@/pages/Pricing';
 import Contact from '@/pages/Contact';
 import Blog from '@/pages/Blog';
 import BlogPost from '@/pages/BlogPost';
+import Privacy from '@/pages/Privacy';
+import Terms from '@/pages/Terms';
 
 function App() {
   return (
-    <Router>
-      <div className="min-h-screen flex flex-col">
+    <Router future={{ v7_startTransition: true }}>
+      <div className="min-h-screen flex flex-col bg-primary-dark-blue text-gray-200">
         <Navbar />
         <main className="flex-grow">
           <Routes>
@@ -25,6 +27,8 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
           </Routes>
         </main>
         <Footer />

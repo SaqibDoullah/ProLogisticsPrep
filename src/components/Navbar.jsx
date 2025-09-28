@@ -1,23 +1,14 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Menu, X, Package, Phone } from 'lucide-react';
+import { Menu, X, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const navItems = [
     { name: 'Home', path: '/' },
@@ -32,21 +23,12 @@ const Navbar = () => {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-        isScrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
-      )}
+      className='bg-white shadow-lg'
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20">
           <Link to="/" className="flex items-center space-x-2">
-            <Package className="h-8 w-8 text-[var(--primary-teal)]" />
-            <span className={cn(
-                "text-xl font-bold transition-colors",
-                isScrolled ? "text-gray-800" : "text-white"
-              )}>
-              Pro Logistics Prep
-            </span>
+            <img src="/logo-trans.png" alt="Pro Logistics Prep Logo" className="h-16 w-auto" />
           </Link>
 
           {/* Desktop Navigation */}
@@ -56,8 +38,8 @@ const Navbar = () => {
                 key={item.name}
                 to={item.path}
                 className={cn(
-                  'text-sm font-medium transition-colors hover:text-[var(--primary-teal)]',
-                  location.pathname === item.path ? 'text-[var(--primary-teal)]' : (isScrolled ? 'text-gray-700' : 'text-white')
+                  'text-sm font-medium transition-colors hover:text-[var(--primary-light-blue)]',
+                  location.pathname === item.path ? 'text-[var(--primary-light-blue)]' : 'text-gray-700'
                 )}
               >
                 {item.name}
@@ -73,10 +55,7 @@ const Navbar = () => {
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className={cn(
-                'p-2 rounded-md',
-                isScrolled ? 'text-gray-700' : 'text-white'
-              )}
+              className='p-2 rounded-md text-gray-700'
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -98,7 +77,7 @@ const Navbar = () => {
                 onClick={() => setIsOpen(false)}
                 className={cn(
                   'block py-2 px-4 text-sm font-medium rounded-md transition-colors hover:bg-gray-100',
-                  location.pathname === item.path ? 'text-[var(--primary-teal)] bg-teal-50' : 'text-gray-700'
+                  location.pathname === item.path ? 'text-[var(--primary-light-blue)] bg-teal-50' : 'text-gray-700'
                 )}
               >
                 {item.name}

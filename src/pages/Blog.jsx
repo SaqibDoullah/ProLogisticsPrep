@@ -64,7 +64,7 @@ const Blog = () => {
 
       {/* Featured Post */}
       {featuredPost && (
-        <section className="py-16 bg-white">
+        <section className="py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -73,14 +73,14 @@ const Blog = () => {
               className="mb-12"
             >
               <div className="flex items-center mb-8">
-                <Tag className="h-6 w-6 text-blue-600 mr-2" />
+                <Tag className="h-6 w-6 text-[var(--primary-light-blue)] mr-2" />
                 <span className="text-lg font-semibold gradient-text">Featured Article</span>
               </div>
               
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div>
-                  <div className="flex items-center space-x-4 text-sm text-gray-600 mb-4">
-                    <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-medium">
+                  <div className="flex items-center space-x-4 text-sm text-gray-400 mb-4">
+                    <span className="bg-white/10 text-[var(--primary-light-blue)] px-3 py-1 rounded-full font-medium">
                       {featuredPost.category}
                     </span>
                     <div className="flex items-center">
@@ -98,14 +98,14 @@ const Blog = () => {
                     {featuredPost.title}
                   </h2>
                   
-                  <p className="text-xl text-gray-600 mb-6">
+                  <p className="text-xl text-gray-300 mb-6">
                     {featuredPost.excerpt}
                   </p>
                   
                   <div className="flex items-center justify-between">
                     <div className="flex items-center">
-                      <User className="h-5 w-5 text-gray-400 mr-2" />
-                      <span className="text-gray-700 font-medium">{featuredPost.author}</span>
+                      <User className="h-5 w-5 text-gray-500 mr-2" />
+                      <span className="text-gray-300 font-medium">{featuredPost.author}</span>
                     </div>
                     
                     <Link to={`/blog/${featuredPost.slug}`}>
@@ -130,7 +130,7 @@ const Blog = () => {
       )}
 
       {/* Categories Filter */}
-      <section className="py-8 bg-gray-50">
+      <section className="py-8 bg-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -144,8 +144,8 @@ const Blog = () => {
                 onClick={() => setActiveCategory(category)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                   activeCategory === category
-                    ? 'bg-blue-600 text-white' 
-                    : 'bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-600'
+                    ? 'bg-[var(--primary-light-blue)] text-white' 
+                    : 'bg-white/10 text-gray-300 hover:bg-white/20 hover:text-white'
                 }`}
               >
                 {category}
@@ -156,7 +156,7 @@ const Blog = () => {
       </section>
 
       {/* Blog Posts Grid */}
-      <section className="py-16 bg-white">
+      <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -167,7 +167,7 @@ const Blog = () => {
             <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">
               Latest Articles
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-gray-300">
               Stay updated with the latest insights and best practices
             </p>
           </motion.div>
@@ -179,7 +179,7 @@ const Blog = () => {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white rounded-xl shadow-custom hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden flex flex-col"
+                className="glass-effect rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden flex flex-col"
               >
                 <Link to={`/blog/${post.slug}`} className="block">
                   <img
@@ -189,8 +189,8 @@ const Blog = () => {
                 </Link>
                 
                 <div className="p-6 flex flex-col flex-grow">
-                  <div className="flex items-center space-x-3 text-sm text-gray-600 mb-3">
-                    <span className="bg-gray-100 text-gray-800 px-2 py-1 rounded font-medium">
+                  <div className="flex items-center space-x-3 text-sm text-gray-400 mb-3">
+                    <span className="bg-white/10 text-[var(--primary-light-blue)] px-2 py-1 rounded font-medium">
                       {post.category}
                     </span>
                     <div className="flex items-center">
@@ -203,24 +203,24 @@ const Blog = () => {
                     <span>{post.readTime}</span>
                   </div>
                   
-                  <h3 className="text-xl font-bold mb-3 line-clamp-2 hover:text-blue-600 transition-colors">
+                  <h3 className="text-xl font-bold mb-3 line-clamp-2 text-white hover:text-[var(--primary-light-blue)] transition-colors">
                     <Link to={`/blog/${post.slug}`}>{post.title}</Link>
                   </h3>
                   
-                  <p className="text-gray-600 mb-4 line-clamp-3 flex-grow">
+                  <p className="text-gray-300 mb-4 line-clamp-3 flex-grow">
                     {post.excerpt}
                   </p>
                   
                   <div className="flex items-center justify-between mt-auto">
                     <div className="flex items-center">
-                      <User className="h-4 w-4 text-gray-400 mr-2" />
-                      <span className="text-sm text-gray-700">{post.author}</span>
+                      <User className="h-4 w-4 text-gray-500 mr-2" />
+                      <span className="text-sm text-gray-400">{post.author}</span>
                     </div>
                     
                     <Link to={`/blog/${post.slug}`}>
                       <Button 
                         variant="ghost" 
-                        className="text-blue-600 hover:text-blue-700 p-0"
+                        className="text-[var(--primary-light-blue)] hover:text-white p-0"
                       >
                         Read More
                         <ArrowRight className="h-4 w-4 ml-1" />
@@ -255,12 +255,12 @@ const Blog = () => {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-full border-0 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-600"
+                className="flex-1 px-4 py-3 rounded-full border-0 bg-white/20 text-white placeholder-gray-300 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[var(--primary-dark-blue)]"
                 required
               />
               <Button 
                 type="submit"
-                className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 rounded-full font-semibold whitespace-nowrap"
+                className="bg-white text-[var(--primary-dark-blue)] hover:bg-gray-100 px-8 py-3 rounded-full font-semibold whitespace-nowrap"
               >
                 Subscribe
               </Button>

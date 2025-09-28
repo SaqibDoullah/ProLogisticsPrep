@@ -7,6 +7,7 @@ import { useToast } from '@/components/ui/use-toast';
 
 const Contact = () => {
   const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -23,20 +24,41 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbx3b8Be3DQ-eBsALLY8DaG8EVW_0uA1RD-LcPIrhCr7_djEulsezn98NeLEnLt0OYGW/exec';
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    toast({
-      title: "🚧 This feature isn't implemented yet—but don't worry! You can request it in your next prompt! 🚀",
-      duration: 5000,
-    });
+    setIsSubmitting(true);
+    try {
+      const data = new FormData();
+      data.append('fullName', formData.name);
+      data.append('email', formData.email);
+      data.append('company', formData.company || '');
+      data.append('phone', formData.phone || '');
+      data.append('service', formData.service || '');
+      data.append('message', formData.message);
+
+      await fetch(WEB_APP_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: data
+      });
+
+      toast({ title: 'Thank you!', description: 'Your message has been received and we will get be in touch soon.'});
+      setFormData({ name:'', email:'', company:'', phone:'', service:'', message:'' });
+    } catch (err) {
+      toast({ title: 'Error sending message', description: 'Please try again later.', variant: 'destructive' });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
     {
       icon: Phone,
       title: 'Phone',
-      details: '(555) 123-4567',
-      description: 'Mon-Fri 8AM-6PM EST'
+      details: '(281) 827-8643',
+      description: 'Mon-Fri 9AM-5PM CST'
     },
     {
       icon: Mail,
@@ -47,50 +69,62 @@ const Contact = () => {
     {
       icon: MapPin,
       title: 'Address',
-      details: '123 Logistics Ave',
-      description: 'Warehouse District, NY 10001'
+      details: 'Sugarland, TX 77478'
     },
     {
       icon: Clock,
       title: 'Business Hours',
-      details: 'Mon-Fri: 8AM-6PM EST',
-      description: 'Sat: 9AM-2PM EST'
+      details: 'Mon-Fri: 9AM-5PM CST'
     }
   ];
 
   const faqs = [
     {
       question: 'How quickly can you start processing my inventory?',
-      answer: 'We can typically start processing your inventory within 24-48 hours of receiving it at our facility, depending on the complexity of your requirements.'
+      answer:
+        'We can typically start processing your inventory within 24-48 hours of receiving it at our facility, depending on the complexity of your requirements.'
     },
     {
       question: 'What integrations do you support?',
-      answer: 'We integrate with all major e-commerce platforms including Amazon Seller Central, Shopify, eBay, Walmart, Etsy, and many others. We also offer custom API integrations.'
+      answer:
+        'We integrate with all major e-commerce platforms including Amazon Seller Central, Shopify, eBay, Walmart, Etsy, and many others. We also offer custom API integrations.'
     },
     {
       question: 'Do you provide insurance for stored inventory?',
-      answer: 'Yes, all inventory stored in our facility is covered by comprehensive insurance. We also maintain strict security protocols and climate-controlled environments.'
+      answer:
+        'Yes, all inventory stored in our facility is covered by comprehensive insurance. We also maintain strict security protocols and climate-controlled environments.'
     },
     {
       question: 'What are your minimum volume requirements?',
-      answer: 'We work with businesses of all sizes. Our Starter plan has no minimums, making it perfect for new sellers or those testing our services.'
+      answer:
+        'We work with businesses of all sizes. Our Starter plan has no minimums, making it perfect for new sellers or those testing our services.'
     },
     {
       question: 'How do you ensure Amazon compliance?',
-      answer: 'Our team stays up-to-date with all Amazon requirements and guidelines. We have a 99.9% compliance rate and guarantee that all prep work meets Amazon standards.'
+      answer:
+        'Our team stays up-to-date with all Amazon requirements and guidelines. We have a 99.9% compliance rate and guarantee that all prep work meets Amazon standards.'
     },
     {
       question: 'Can you handle international shipping?',
-      answer: 'Yes, we offer international shipping services and can handle all customs documentation and requirements for global fulfillment.'
+      answer:
+        'Yes, we offer international shipping services and can handle all customs documentation and requirements for global fulfillment.'
     }
   ];
 
   return (
     <>
       <Helmet>
-        <title>Contact Pro Logistics Prep - Get Your Free FBA Prep Quote Today</title>
-        <meta name="description" content="Contact Pro Logistics Prep for FBA prep, fulfillment, and logistics services. Get a free quote, schedule consultation, or ask questions. Phone: (555) 123-4567" />
-        <meta name="keywords" content="contact pro logistics prep, FBA prep quote, fulfillment consultation, logistics contact, Amazon prep services contact" />
+        <title>
+          Contact Pro Logistics Prep - Get Your Free FBA Prep Quote Today
+        </title>
+        <meta
+          name="description"
+          content="Contact Pro Logistics Prep for FBA prep, fulfillment, and logistics services. Get a free quote, schedule consultation, or ask questions. Phone: (555) 123-4567"
+        />
+        <meta
+          name="keywords"
+          content="contact pro logistics prep, FBA prep quote, fulfillment consultation, logistics contact, Amazon prep services contact"
+        />
       </Helmet>
 
       {/* Hero Section */}
@@ -102,19 +136,17 @@ const Contact = () => {
             transition={{ duration: 0.6 }}
             className="text-center text-white"
           >
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              Get In Touch
-            </h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">Get In Touch</h1>
             <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto">
-              Ready to streamline your logistics? Contact us for a free consultation 
-              and custom quote tailored to your business needs.
+              Ready to streamline your logistics? Contact us for a free
+              consultation and custom quote tailored to your business needs.
             </p>
           </motion.div>
         </div>
       </section>
 
       {/* Contact Info */}
-      <section className="py-16 bg-white">
+      <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {contactInfo.map((info, index) => (
@@ -123,12 +155,16 @@ const Contact = () => {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="text-center p-6 rounded-xl hover:shadow-lg transition-shadow duration-300"
+                className="text-center p-6 rounded-xl glass-effect hover:shadow-lg transition-shadow duration-300"
               >
-                <info.icon className="h-12 w-12 text-blue-600 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold mb-2">{info.title}</h3>
-                <div className="text-lg font-medium text-gray-800 mb-1">{info.details}</div>
-                <div className="text-sm text-gray-600">{info.description}</div>
+                <info.icon className="h-12 w-12 text-[var(--primary-light-blue)] mx-auto mb-4" />
+                <h3 className="text-xl font-semibold mb-2 text-white">
+                  {info.title}
+                </h3>
+                <div className="text-lg font-medium text-gray-200 mb-1">
+                  {info.details}
+                </div>
+                <div className="text-sm text-gray-400">{info.description}</div>
               </motion.div>
             ))}
           </div>
@@ -136,7 +172,7 @@ const Contact = () => {
       </section>
 
       {/* Contact Form & Map */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Form */}
@@ -144,17 +180,19 @@ const Contact = () => {
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
-              className="bg-white rounded-xl shadow-custom p-8"
+              className="glass-effect rounded-xl shadow-lg p-8"
             >
               <div className="flex items-center mb-6">
-                <MessageCircle className="h-8 w-8 text-blue-600 mr-3" />
-                <h2 className="text-2xl font-bold gradient-text">Send Us a Message</h2>
+                <MessageCircle className="h-8 w-8 text-[var(--primary-light-blue)] mr-3" />
+                <h2 className="text-2xl font-bold gradient-text">
+                  Send Us a Message
+                </h2>
               </div>
-              
+
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
                       Full Name *
                     </label>
                     <input
@@ -163,12 +201,12 @@ const Contact = () => {
                       value={formData.name}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-colors"
+                      className="w-full px-4 py-3 border border-white/20 rounded-lg bg-transparent focus:ring-2 focus:ring-[var(--primary-light-blue)] focus:border-transparent transition-colors"
                       placeholder="Your full name"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
                       Email Address *
                     </label>
                     <input
@@ -177,7 +215,7 @@ const Contact = () => {
                       value={formData.email}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-colors"
+                      className="w-full px-4 py-3 border border-white/20 rounded-lg bg-transparent focus:ring-2 focus:ring-[var(--primary-light-blue)] focus:border-transparent transition-colors"
                       placeholder="your@email.com"
                     />
                   </div>
@@ -185,7 +223,7 @@ const Contact = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
                       Company Name
                     </label>
                     <input
@@ -193,12 +231,12 @@ const Contact = () => {
                       name="company"
                       value={formData.company}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-colors"
+                      className="w-full px-4 py-3 border border-white/20 rounded-lg bg-transparent focus:ring-2 focus:ring-[var(--primary-light-blue)] focus:border-transparent transition-colors"
                       placeholder="Your company"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
                       Phone Number
                     </label>
                     <input
@@ -206,35 +244,51 @@ const Contact = () => {
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-colors"
+                      className="w-full px-4 py-3 border border-white/20 rounded-lg bg-transparent focus:ring-2 focus:ring-[var(--primary-light-blue)] focus:border-transparent transition-colors"
                       placeholder="(555) 123-4567"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
                     Service Interest
                   </label>
                   <select
                     name="service"
                     value={formData.service}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-colors"
+                    className="w-full px-4 py-3 border border-white/20 rounded-lg bg-transparent focus:ring-2 focus:ring-[var(--primary-light-blue)] focus:border-transparent transition-colors"
                   >
-                    <option value="">Select a service</option>
-                    <option value="fba-prep">FBA Prep Services</option>
-                    <option value="fulfillment">Order Fulfillment</option>
-                    <option value="storage">Inventory Storage</option>
-                    <option value="returns">Returns Processing</option>
-                    <option value="kitting">Kitting & Bundling</option>
-                    <option value="multi-channel">Multi-Channel Integration</option>
-                    <option value="consultation">General Consultation</option>
+                    <option className="text-gray-900" value="">
+                      Select a service
+                    </option>
+                    <option className="text-gray-900" value="fba-prep">
+                      FBA Prep Services
+                    </option>
+                    <option className="text-gray-900" value="fulfillment">
+                      Order Fulfillment
+                    </option>
+                    <option className="text-gray-900" value="storage">
+                      Inventory Storage
+                    </option>
+                    <option className="text-gray-900" value="returns">
+                      Returns Processing
+                    </option>
+                    <option className="text-gray-900" value="kitting">
+                      Kitting & Bundling
+                    </option>
+                    <option className="text-gray-900" value="multi-channel">
+                      Multi-Channel Integration
+                    </option>
+                    <option className="text-gray-900" value="consultation">
+                      General Consultation
+                    </option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
                     Message *
                   </label>
                   <textarea
@@ -243,17 +297,24 @@ const Contact = () => {
                     onChange={handleInputChange}
                     required
                     rows={4}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-colors resize-none"
+                    className="w-full px-4 py-3 border border-white/20 rounded-lg bg-transparent focus:ring-2 focus:ring-[var(--primary-light-blue)] focus:border-transparent transition-colors resize-none"
                     placeholder="Tell us about your logistics needs..."
                   />
                 </div>
 
-                <Button 
+                <Button
                   type="submit"
+                  disabled={isSubmitting}
                   className="w-full btn-primary text-white py-3 rounded-lg font-semibold"
                 >
-                  <Send className="h-5 w-5 mr-2" />
-                  Send Message
+                  {isSubmitting ? (
+                    'Sending...'
+                  ) : (
+                    <>
+                      <Send className="h-5 w-5 mr-2" />
+                      Send Message
+                    </>
+                  )}
                 </Button>
               </form>
             </motion.div>
@@ -265,44 +326,48 @@ const Contact = () => {
               transition={{ duration: 0.6 }}
               className="space-y-8"
             >
-              {/* Map Placeholder */}
-              <div className="bg-white rounded-xl shadow-custom p-6">
-                <h3 className="text-xl font-semibold mb-4">Our Location</h3>
-                <div className="bg-gray-200 rounded-lg h-64 flex items-center justify-center">
-                  <div className="text-center text-gray-600">
+              <div className="glass-effect rounded-xl shadow-lg p-6">
+                <h3 className="text-xl font-semibold mb-4 text-white">
+                  Our Location
+                </h3>
+                <div className="bg-white/10 rounded-lg h-64 flex items-center justify-center">
+                  <div className="text-center text-gray-300">
                     <MapPin className="h-12 w-12 mx-auto mb-2" />
                     <p>Interactive Map</p>
-                    <p className="text-sm">123 Logistics Ave, Warehouse District, NY 10001</p>
+                    <p className="text-sm">
+                      730 IND BLVD, Sugar Land, TX, 77478
+                    </p>
                   </div>
                 </div>
               </div>
 
-              {/* Quick Contact */}
-              <div className="bg-white rounded-xl shadow-custom p-6">
-                <h3 className="text-xl font-semibold mb-4">Quick Contact</h3>
+              <div className="glass-effect rounded-xl shadow-lg p-6">
+                <h3 className="text-xl font-semibold mb-4 text-white">
+                  Quick Contact
+                </h3>
                 <div className="space-y-4">
                   <div className="flex items-center space-x-3">
-                    <Phone className="h-5 w-5 text-blue-600" />
+                    <Phone className="h-5 w-5 text-[var(--primary-light-blue)]" />
                     <div>
-                      <div className="font-medium">(555) 123-4567</div>
-                      <div className="text-sm text-gray-600">Call for immediate assistance</div>
+                      <div className="font-medium text-white">
+                        (281) 827-8643
+                      </div>
+                      <div className="text-sm text-gray-400">
+                        Call for immediate assistance
+                      </div>
                     </div>
                   </div>
                   <div className="flex items-center space-x-3">
-                    <Mail className="h-5 w-5 text-blue-600" />
+                    <Mail className="h-5 w-5 text-[var(--primary-light-blue)]" />
                     <div>
-                      <div className="font-medium">info@prologisticsprep.com</div>
-                      <div className="text-sm text-gray-600">Email for detailed inquiries</div>
+                      <div className="font-medium text-white">
+                        info@prologisticsprep.com
+                      </div>
+                      <div className="text-sm text-gray-400">
+                        Email for detailed inquiries
+                      </div>
                     </div>
                   </div>
-                </div>
-                
-                <div className="mt-6 pt-6 border-t border-gray-200">
-                  <h4 className="font-semibold mb-3">Emergency Contact</h4>
-                  <p className="text-sm text-gray-600">
-                    For urgent issues outside business hours, call our emergency line: 
-                    <span className="font-medium text-blue-600"> (555) 999-URGENT</span>
-                  </p>
                 </div>
               </div>
             </motion.div>
@@ -311,7 +376,7 @@ const Contact = () => {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -322,7 +387,7 @@ const Contact = () => {
             <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">
               Frequently Asked Questions
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-gray-300">
               Quick answers to common questions about our services
             </p>
           </motion.div>
@@ -334,10 +399,12 @@ const Contact = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-gray-50 rounded-lg p-6"
+                className="glass-effect rounded-lg p-6"
               >
-                <h3 className="text-lg font-semibold mb-3 text-gray-800">{faq.question}</h3>
-                <p className="text-gray-600">{faq.answer}</p>
+                <h3 className="text-lg font-semibold mb-3 text-white">
+                  {faq.question}
+                </h3>
+                <p className="text-gray-300">{faq.answer}</p>
               </motion.div>
             ))}
           </div>
@@ -357,28 +424,15 @@ const Contact = () => {
               Ready to Get Started?
             </h2>
             <p className="text-xl text-white/90 max-w-3xl mx-auto">
-              Don't wait - contact us today and discover how Pro Logistics Prep can 
-              transform your e-commerce operations.
+              Don't wait - contact us today and discover how Pro Logistics Prep
+              can transform your e-commerce operations.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                onClick={() => toast({
-                  title: "🚧 This feature isn't implemented yet—but don't worry! You can request it in your next prompt! 🚀",
-                  duration: 5000,
-                })}
-                className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-full"
+              <Button
+                onClick={() => navigate('/contact')}
+                className="bg-white text-[var(--primary-dark-blue)] hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-full"
               >
                 Get Free Quote
-              </Button>
-              <Button 
-                onClick={() => toast({
-                  title: "🚧 This feature isn't implemented yet—but don't worry! You can request it in your next prompt! 🚀",
-                  duration: 5000,
-                })}
-                variant="outline" 
-                className="border-white text-white hover:bg-white hover:text-blue-600 px-8 py-4 text-lg font-semibold rounded-full"
-              >
-                Schedule Call
               </Button>
             </div>
           </motion.div>
