@@ -1,0 +1,51 @@
+name: build-static
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      # Optional: include an .htaccess for SPA routing (React/Vite).
+      # Put your .htaccess in /public so it gets copied to dist automatically.
+      # If you don't have one, uncomment the 3 lines below to create one:
+      # - name: Add .htaccess for SPA routing
+      #   run: |
+      #     cat > dist/.htaccess <<'EOF'
+      #     RewriteEngine On
+      #     RewriteBase /
+      #     RewriteRule ^index\.html$ - [L]
+      #     RewriteCond %{REQUEST_FILENAME} !-f
+      #     RewriteCond %{REQUEST_FILENAME} !-d
+      #     RewriteRule . /index.html [L]
+      #     EOF
+
+      - name: Push dist/ to build branch
+        run: |
+          cd dist
+          git init
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Build $GITHUB_SHA"
+          git branch -M build
+          git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/SaqibDoullah/ProLogisticsPrep.git
+          git push -f origin build
