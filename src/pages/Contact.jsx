@@ -69,7 +69,7 @@ const Contact = () => {
     {
       icon: MapPin,
       title: 'Address',
-      details: 'Sugarland, TX 77478'
+      details: '730 IND BLVD, Sugar Land, TX, 77478'
     },
     {
       icon: Clock,
@@ -330,14 +330,15 @@ const Contact = () => {
                 <h3 className="text-xl font-semibold mb-4 text-white">
                   Our Location
                 </h3>
-                <div className="bg-white/10 rounded-lg h-64 flex items-center justify-center">
-                  <div className="text-center text-gray-300">
-                    <MapPin className="h-12 w-12 mx-auto mb-2" />
-                    <p>Interactive Map</p>
-                    <p className="text-sm">
-                      730 IND BLVD, Sugar Land, TX, 77478
-                    </p>
-                  </div>
+                <div className="bg-white/10 rounded-lg h-64">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3468.293339023181!2d-95.63229868489379!3d29.62451498203681!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640e3b3b5a4b37b%3A0x8b3c5e8f49a7a9a0!2s730%20Industrial%20Blvd%2C%20Sugar%20Land%2C%20TX%2077478!5e0!3m2!1sen!2sus!4v1626821325341!5m2!1sen!2sus"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen=""
+                    loading="lazy"
+                  ></iframe>
                 </div>
               </div>
 

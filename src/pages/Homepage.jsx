@@ -147,11 +147,10 @@ const Homepage = () => {
             className="text-center mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">
-              Complete E-commerce Logistics Solutions
+              Complete Amazon Logistics Solutions
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              From FBA prep to multi-channel fulfillment, we handle every aspect of your logistics 
-              so you can focus on growing your business.
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto text-center">
+            We provide comprehensive prep and ship services for Amazon sellers. Our services include receiving, inspection, labeling, poly-bagging, and kitting, ensuring your products are perfectly prepared for Fulfillment by Amazon (FBA). We help streamline your supply chain and grow your business.
             </p>
           </motion.div>
 
