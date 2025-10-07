@@ -46,12 +46,12 @@ const Footer = () => {
           <div className="space-y-4">
             <span className="text-lg font-semibold text-gray-900">Services</span>
             <div className="space-y-2">
-              <p className="text-gray-600 text-sm">FBA Prep & Labeling</p>
-              <p className="text-gray-600 text-sm">Order Fulfillment</p>
-              <p className="text-gray-600 text-sm">Inventory Storage</p>
-              <p className="text-gray-600 text-sm">Kitting & Bundling</p>
-              <p className="text-gray-600 text-sm">Returns Processing</p>
-              <p className="text-gray-600 text-sm">Multi-Channel Integration</p>
+               <Link to="/services#fba-prep-services" className="block text-gray-600 hover:text-accent-orange transition-colors">FBA Prep & Labeling</Link>
+               <Link to="/services#order-fulfillment" className="block text-gray-600 hover:text-accent-orange transition-colors">Order Fulfillment</Link>
+               <Link to="/services#inventory-storage" className="block text-gray-600 hover:text-accent-orange transition-colors">Inventory Storage</Link>
+               <Link to="/services#kitting-and-bundling" className="block text-gray-600 hover:text-accent-orange transition-colors">Kitting & Bundling</Link>
+               <Link to="/services#returns-processing" className="block text-gray-600 hover:text-accent-orange transition-colors">Returns Processing</Link>
+               <Link to="/services#multi-channel-integration" className="block text-gray-600 hover:text-accent-orange transition-colors">Multi-Channel Integration</Link>
             </div>
           </div>
 

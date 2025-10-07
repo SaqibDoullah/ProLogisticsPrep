@@ -10,6 +10,9 @@ import { blogData } from '@/lib/blogData';
 const Blog = () => {
   const { toast } = useToast();
   const [activeCategory, setActiveCategory] = useState('All Posts');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [email, setEmail] = useState('');
+  const [subscribed, setSubscribed] = useState(false);
 
   const featuredPost = blogData.find(post => post.featured);
   const regularPosts = blogData.filter(post => !post.featured);
@@ -24,14 +27,29 @@ const Blog = () => {
       return regularPosts;
     }
     return regularPosts.filter(post => post.category === activeCategory);
-  }, [activeCategory]);
+  }, [activeCategory, regularPosts]);
 
-  const handleNewsletterSubmit = (e) => {
+  const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzTDSkICBeFv1ruQaR30ceCu4ssI0pQl6jc1HNnqtUXFVXW6Rz-9NGloxg72U3SWnAI/exec';
+
+  const handleNewsletterSubmit = async (e) => {
     e.preventDefault();
-    toast({
-      title: "🚧 This feature isn't implemented yet—but don't worry! You can request it in your next prompt! 🚀",
-      duration: 5000,
-    });
+    setIsSubmitting(true);
+    try {
+      const data = new FormData();
+      data.append('email', email);
+
+      await fetch(WEB_APP_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: data
+      });
+
+      setSubscribed(true);
+    } catch (err) {
+      toast({ title: 'Error subscribing', description: 'Please try again later.', variant: 'destructive' });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -119,9 +137,9 @@ const Blog = () => {
                 
                 <div>
                   <img
-                    class="rounded-xl shadow-custom w-full h-80 object-cover"
+                    className="rounded-xl shadow-custom w-full h-80 object-cover"
                     alt={featuredPost.title}
-                   src="https://images.unsplash.com/photo-1686643184179-e4b65e15022e" />
+                   src={featuredPost.image} />
                 </div>
               </div>
             </motion.div>
@@ -183,9 +201,10 @@ const Blog = () => {
               >
                 <Link to={`/blog/${post.slug}`} className="block">
                   <img
-                    class="w-full h-48 object-cover"
+                    className="w-full h-48 object-cover"
                     alt={post.title}
-                   src="https://images.unsplash.com/photo-1595872018818-97555653a011" />
+                   src={post.image.startsWith('/') ? post.image : `https://source.unsplash.com/800x600/?${post.image}`}
+                  />
                 </Link>
                 
                 <div className="p-6 flex flex-col flex-grow">
@@ -251,20 +270,27 @@ const Blog = () => {
               delivered directly to your inbox every week.
             </p>
             
-            <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-full border-0 bg-white/20 text-white placeholder-gray-300 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[var(--primary-dark-blue)]"
-                required
-              />
-              <Button 
-                type="submit"
-                className="bg-white text-[var(--primary-dark-blue)] hover:bg-gray-100 px-8 py-3 rounded-full font-semibold whitespace-nowrap"
-              >
-                Subscribe
-              </Button>
-            </form>
+            {subscribed ? (
+              <p className="text-2xl font-semibold text-white">Thank you for subscribing!</p>
+            ) : (
+              <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="flex-1 px-4 py-3 rounded-full border-0 bg-white/20 text-white placeholder-gray-300 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[var(--primary-dark-blue)]"
+                  required
+                />
+                <Button 
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="bg-white text-[var(--primary-dark-blue)] hover:bg-gray-100 px-8 py-3 rounded-full font-semibold whitespace-nowrap"
+                >
+                  {isSubmitting ? 'Subscribing...' : 'Subscribe'}
+                </Button>
+              </form>
+            )}
             
             <p className="text-sm text-white/70">
               No spam, unsubscribe at any time. We respect your privacy.

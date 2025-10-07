@@ -14,6 +14,7 @@ const Services = () => {
 
   const mainServices = [
     {
+      id: 'fba-prep-services',
       icon: Package,
       title: 'FBA Prep Services',
       description: 'Complete Amazon FBA preparation to ensure your products meet all requirements',
@@ -29,6 +30,7 @@ const Services = () => {
       imageSrc: '/prep services.jpeg'
     },
     {
+      id: 'order-fulfillment',
       icon: Truck,
       title: 'Order Fulfillment',
       description: 'Fast and accurate order processing for all your sales channels',
@@ -44,6 +46,7 @@ const Services = () => {
       imageSrc: '/fullfilment.jpeg'
     },
     {
+      id: 'inventory-storage',
       icon: Warehouse,
       title: 'Inventory Storage',
       description: 'Secure, climate-controlled storage with advanced inventory management',
@@ -59,6 +62,7 @@ const Services = () => {
       imageSrc: '/inventory.jpeg'
     },
     {
+      id: 'returns-processing',
       icon: RotateCcw,
       title: 'Returns Processing',
       description: 'Comprehensive returns management to recover maximum value',
@@ -74,6 +78,7 @@ const Services = () => {
       imageSrc: '/return processing.jpeg'
     },
     {
+      id: 'kitting-and-bundling',
       icon: Tags,
       title: 'Kitting & Bundling',
       description: 'Custom product bundling and promotional packaging services',
@@ -89,6 +94,7 @@ const Services = () => {
       imageSrc: '/bundling.jpeg'
     },
     {
+      id: 'multi-channel-integration',
       icon: ShoppingCart,
       title: 'Multi-Channel Integration',
       description: 'Seamless integration with all major e-commerce platforms',
@@ -148,6 +154,7 @@ const Services = () => {
           <div className="space-y-20">
             {mainServices.map((service, index) => (
               <motion.div
+                id={service.id}
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -158,14 +165,14 @@ const Services = () => {
               >
                 <div className={index % 2 === 1 ? 'lg:col-start-2' : ''}>
                   <div className="flex items-center mb-6">
-                    <service.icon className="h-12 w-12 text-accent-green mr-4" />
+                    <service.icon className="h-12 w-12 text-[var(--primary-light-blue)] mr-4" />
                     <h2 className="text-3xl font-bold gradient-text">{service.title}</h2>
                   </div>
                   <p className="text-xl text-gray-300 mb-6">{service.description}</p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-8">
                     {service.features.map((feature, featureIndex) => (
                       <div key={featureIndex} className="flex items-center space-x-3">
-                        <CheckCircle className="h-5 w-5 text-accent-green flex-shrink-0" />
+                        <CheckCircle className="h-5 w-5 text-[var(--primary-light-blue)] flex-shrink-0" />
                         <span className="text-gray-300">{feature}</span>
                       </div>
                     ))}
@@ -216,7 +223,7 @@ const Services = () => {
                 className="glass-effect p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300"
               >
                 <div className="flex items-center space-x-3">
-                  <CheckCircle className="h-6 w-6 text-accent-green flex-shrink-0" />
+                  <CheckCircle className="h-6 w-6 text-[var(--primary-light-blue)] flex-shrink-0" />
                   <span className="font-medium text-white">{service}</span>
                 </div>
               </motion.div>
@@ -272,7 +279,7 @@ const Services = () => {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="text-center"
               >
-                <div className="w-16 h-16 bg-accent-orange text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">
+                <div className="w-16 h-16 gradient-bg text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">
                   {step.step}
                 </div>
                 <h3 className="text-xl font-semibold mb-3 text-white">{step.title}</h3>
@@ -302,7 +309,7 @@ const Services = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
                 onClick={handleCTAClick}
-                className="btn-orange px-8 py-4 text-lg font-semibold rounded-full"
+                className="bg-white text-[var(--primary-dark-blue)] hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-full"
               >
                 Get Free Quote
               </Button>
