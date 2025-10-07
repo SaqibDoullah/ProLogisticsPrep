@@ -122,7 +122,7 @@ const About = () => {
               <img 
                 className="rounded-xl shadow-custom w-full h-96 object-cover"
                 alt="Pro Logistics Prep team working in modern warehouse facility with advanced inventory systems"
-               src="https://images.unsplash.com/photo-1689942010216-dc412bb1e7a9" />
+               src="/pro-logistics-prep-team.jpeg" />
             </motion.div>
           </div>
         </div>
@@ -230,7 +230,7 @@ const About = () => {
               <img 
                 className="rounded-xl shadow-custom w-full h-96 object-cover"
                 alt="State-of-the-art warehouse facility with climate control and security systems"
-               src="https://images.unsplash.com/photo-1689942010216-dc412bb1e7a9" />
+               src="/freepik__stateoftheart-facilitiesour-50000-square-foot-ware__81369.png" />
             </motion.div>
 
             <motion.div
