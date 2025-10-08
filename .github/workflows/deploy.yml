@@ -2,51 +2,48 @@ name: build-static
 
 on:
   push:
-      branches: [ main ]
+    branches: [ main ]
+  workflow_dispatch: {}
 
-      jobs:
-        build:
-            runs-on: ubuntu-latest
+permissions:
+  contents: write
 
-                steps:
-                      - name: Checkout
-                              uses: actions/checkout@v4
+concurrency:
+  group: build-static
+  cancel-in-progress: true
 
-                                    - name: Setup Node
-                                            uses: actions/setup-node@v4
-                                                    with:
-                                                              node-version: '20'
-                                                                        cache: 'npm'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-                                                                              - name: Install deps
-                                                                                      run: npm ci
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
 
-                                                                                            - name: Build
-                                                                                                    run: npm run build
+      - name: Install deps
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
 
-                                                                                                          # Optional: include an .htaccess for SPA routing (React/Vite).
-                                                                                                                # Put your .htaccess in /public so it gets copied to dist automatically.
-                                                                                                                      # If you don't have one, uncomment the 3 lines below to create one:
-                                                                                                                            # - name: Add .htaccess for SPA routing
-                                                                                                                                  #   run: |
-                                                                                                                                        #     cat > dist/.htaccess <<'EOF'
-                                                                                                                                              #     RewriteEngine On
-                                                                                                                                                    #     RewriteBase /
-                                                                                                                                                          #     RewriteRule ^index\.html$ - [L]
-                                                                                                                                                                #     RewriteCond %{REQUEST_FILENAME} !-f
-                                                                                                                                                                      #     RewriteCond %{REQUEST_FILENAME} !-d
-                                                                                                                                                                            #     RewriteRule . /index.html [L]
-                                                                                                                                                                                  #     EOF
+      - name: Build
+        run: npm run build
 
-                                                                                                                                                                                        - name: Push dist/ to build branch
-                                                                                                                                                                                                run: |
-                                                                                                                                                                                                          cd dist
-                                                                                                                                                                                                                    git init
-                                                                                                                                                                                                                              git config user.name "github-actions[bot]"
-                                                                                                                                                                                                                                        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-                                                                                                                                                                                                                                                  git add .
-                                                                                                                                                                                                                                                            git commit -m "Build $GITHUB_SHA"
-                                                                                                                                                                                                                                                                      git branch -M build
-                                                                                                                                                                                                                                                                                git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/SaqibDoullah/ProLogisticsPrep.git
-                                                                                                                                                                                                                                                                                          git push -f origin build
-                                                                                                                                                                                                                                                                                          
+      # (Optional) stamp so you can verify updates in page source
+      - name: Add build stamp
+        run: echo "<meta name='build' content='${GITHUB_SHA}'>" >> dist/index.html
+
+      # Deploy ONLY dist/ to the build branch
+      - name: Deploy dist to build
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: build
+          folder: dist
+          clean: true
