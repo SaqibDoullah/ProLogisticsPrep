@@ -1,8 +1,7 @@
 ## Pages
-- [- Pro Logistics Prep Blog](/blogpost): No description available
 - [About Pro Logistics Prep - Professional FBA Prep & E-commerce Fulfillment](/about): Learn about Pro Logistics Prep, your trusted partner for FBA preparation and e-commerce fulfillment. Professional team, state-of-the-art facilities, and commitment to excellence.
-- [E-commerce Logistics Blog - Pro Logistics Prep Insights & Tips](/blog): Expert insights on FBA prep, e-commerce fulfillment, inventory management, and logistics optimization. Stay updated with the latest industry trends and best practices.
 - [FBA Prep & E-commerce Fulfillment Services - Pro Logistics Prep](/services): Comprehensive FBA prep, order fulfillment, inventory storage, returns processing, and multi-channel integration services. Amazon compliance guaranteed with fast turnaround times.
 - [Privacy Policy - Pro Logistics Prep](/privacy): Privacy Policy for Pro Logistics Prep. Understand how we collect, use, and protect your personal information.
 - [Terms of Service - Pro Logistics Prep](/terms): Terms of Service for Pro Logistics Prep. Read our terms and conditions for using our website and services.
 - [Transparent FBA Prep & Fulfillment Pricing - Pro Logistics Prep](/pricing): Clear, competitive pricing for FBA prep, order fulfillment, and storage services. No hidden fees, pay-as-you-go options, and volume discounts available.
+- [Untitled Page](/blogpost): No description available
